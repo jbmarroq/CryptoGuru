@@ -1,0 +1,2 @@
+export const GECKO_API_KEY =
+  process.env.NEXT_PUBLIC_REACT_APP_COIN_GECKO_API_KEY;
