@@ -1,16 +1,8 @@
-// import { useState, useEffect } from "react";
-// import { CoinRow } from "../CoinRow";
-// import { LineChartConnectNulls } from "../CoinDetail/CoinDetail";
-
 import { CoinsTable } from "../CoinTable/CoinTable";
-// import { GECKO_API_KEY } from "@/Config/CoinGeckoAPI";
-
-// import AddToQueueIcon from "@mui/icons-material/AddToQueue";
 
 import { useRouter } from "next/router";
 import { Container, Typography, Box } from "@mui/material";
-// import { SyncChart } from "../CoinChart";
-// import { MinMaxExample, MinMaxExample2 } from "../CoinDetail/SliderChart";
+
 import { MultiCarousel } from "../MultiCarousel";
 
 export function CoinLibrary({}) {

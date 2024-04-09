@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { GECKO_API_KEY } from "@/Config/CoinGeckoAPI";
 import {
   Container,
+  Card,
   Typography,
   TextField,
   Table,
@@ -82,7 +83,7 @@ export function CoinsTable() {
         onChange={(e) => setSearch(e.target.value)}
         style={{ marginBottom: 20 }}
       />
-      <TableContainer component={Paper}>
+      <TableContainer component={Card}>
         <Table>
           <TableHead>
             <TableRow>
