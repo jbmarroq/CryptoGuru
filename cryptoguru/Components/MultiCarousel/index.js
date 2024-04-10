@@ -2,6 +2,7 @@ import useSWR from "swr";
 import { GECKO_API_KEY } from "@/Config/CoinGeckoAPI";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import Link from "next/link";
 
 const responsive = {
   superLargeDesktop: {
@@ -124,17 +125,20 @@ export function MultiCarousel({}) {
         >
           {/* Assuming coin has properties 'name' and 'link' */}
           {/* <a href={coin.link}>{coin.name}</a> */}
-          {/* <Link
-            className={classes.carouselItem}
-            to={`/coins/${coin.id}`}
-          ></Link> */}
-          <img
-            src={coin.item.large}
-            alt={coin.item.name}
-            className="mx-auto"
-            height={100}
-            width={100}
-          />
+          <Link
+            href={`/coins/${coin.item.id}`}
+            // className="bg-transparent hover:bg-gray-300"
+          >
+            <img
+              src={coin.item.large}
+              alt={coin.item.name}
+              className="mx-auto"
+              height={100}
+              width={100}
+              className="bg-transparent hover:bg-pink-100 p-2"
+            />
+          </Link>
+
           <div>
             <p>{coin.item.symbol.toUpperCase()}</p>
             <p
