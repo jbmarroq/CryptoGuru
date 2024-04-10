@@ -50,7 +50,7 @@ export function SyncChart() {
   // console.log("chartdata:", chartData);
   return (
     <div style={{ width: "100%" }}>
-      <h4>A demo of synchronized AreaCharts</h4>
+      <h1>A demo of synchronized AreaCharts</h1>
       <ResponsiveContainer width="100%" height={200}>
         <LineChart
           width={500}

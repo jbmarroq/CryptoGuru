@@ -1,13 +1,22 @@
 // import { SliderChart } from "@/Components/CoinSliderChart/SliderChart";
 import { SyncChart } from "@/Components/CoinSliderChart/SliderChart";
 import { GECKO_API_KEY } from "@/Config/CoinGeckoAPI";
-import { Typography } from "@mui/material";
+import { Typography, Grid, Container, Card } from "@mui/material";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 // import Link from "next/link";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+function cleanText(text) {
+  // Remove HTML tags
+  const cleanedText = text.replace(/<[^>]+>/g, "");
+  // Replace special characters
+  const cleanedTextWithoutSpecialChars = cleanedText.replace(/&[^\s]*;/g, "");
+  // Trim excess whitespace
+  const finalText = cleanedTextWithoutSpecialChars.trim();
+  return finalText;
 }
 
 export default function CoinDetails() {
@@ -37,12 +46,8 @@ export default function CoinDetails() {
   //   const coin = coinInfo;
 
   return (
-    <>
-      <div>
-        {/* <Link href={`/films?releaseYear=${releaseYear}`}>Back to Dashboard</Link> */}
-      </div>
-      <div>
-        {/* //sidebar? */}
+    <Grid container spacing={2}>
+      <Grid item xs={6} md={4}>
         <img
           src={coinInfo?.image.large}
           alt={coinInfo?.name}
@@ -51,9 +56,8 @@ export default function CoinDetails() {
         />
         <Typography variant="h3">{coinInfo?.name}</Typography>
         <Typography variant="subtitle1">
-          Genesis Date:{coinInfo?.genesis_date}
+          Genesis Date: {coinInfo?.genesis_date}
         </Typography>
-        <Typography variant="subtitle1">{coinInfo?.description.en}.</Typography>
         <div>
           <span style={{ display: "flex" }}>
             <Typography variant="h5">Rank:</Typography>
@@ -84,21 +88,16 @@ export default function CoinDetails() {
             </Typography>
           </span>
         </div>
+        <Typography variant="subtitle1">
+          {cleanText(coinInfo?.description.en)}
+        </Typography>
+      </Grid>
+      <Grid item xs={6} md={8}>
         <SyncChart />
-      </div>
-    </>
+      </Grid>
+    </Grid>
   );
 }
-
-// export const getServerSideProps = async ({ params }) => {
-//   const { filmID } = params;
-//   const url = `https://api.coingecko.com/api/v3/coins/${coinId}?localization=true&tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=true`;
-//   const data = await fetcher(url);
-//   console.log("InitialDATA : ", data);
-
-//   return {
-//     props: {
-//       initialData: data,
-//     },
-//   };
-// };
+{
+  /* <Link href={`/films?releaseYear=${releaseYear}`}>Back to Dashboard</Link> */
+}

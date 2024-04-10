@@ -121,7 +121,12 @@ export function MultiCarousel({}) {
       {coinsToDisplay.map((coin, index) => (
         <div
           key={index}
-          className="text-center border border-pink-400 p-4 rounded-lg" //bg-pink-100 border border-yellow-700 p-4 rounded-lg
+          style={{
+            textAlign: "center",
+            border: "1px solid #FEC8D8",
+            padding: "1rem",
+            borderRadius: "0.5rem",
+          }} //bg-pink-100 border border-yellow-700 p-4 rounded-lg
         >
           {/* Assuming coin has properties 'name' and 'link' */}
           {/* <a href={coin.link}>{coin.name}</a> */}
@@ -132,7 +137,6 @@ export function MultiCarousel({}) {
             <img
               src={coin.item.large}
               alt={coin.item.name}
-              className="mx-auto"
               height={100}
               width={100}
               className="bg-transparent hover:bg-pink-100 p-2"

@@ -76,7 +76,15 @@ export function CoinsTable() {
   const pageCount = Math.ceil((filteredCoins?.length || 0) / 10);
 
   return (
-    <Container className="bg-pink-300 rounded-lg">
+    <Container
+      sx={{
+        backgroundColor: "pink",
+        borderRadius: "0.5rem",
+        marginBottom: "10px",
+      }}
+    >
+      {/* "className="bg-pink-300 rounded-lg" */}
+
       <Typography
         variant="h4"
         style={{
@@ -84,6 +92,7 @@ export function CoinsTable() {
           justifyContent: "center",
           display: "flex",
           color: "cyan",
+          padding: "5px",
         }}
       >
         Cryptocurrency Prices by Market Cap
@@ -197,6 +206,7 @@ export function CoinsTable() {
           onChange={(_, value) => setPage(value)}
           style={{
             marginTop: 10,
+
             justifyContent: "center",
             display: "flex",
           }}
