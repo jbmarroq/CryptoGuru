@@ -15,7 +15,7 @@ const responsive = {
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
-    items: 5,
+    items: 4,
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
@@ -114,12 +114,16 @@ export function MultiCarousel({}) {
       infinite={true}
       autoPlay={true}
       autoPlaySpeed={5000}
+      centerMode
       // containerClass="container"
     >
       {coinsToDisplay.map((coin, index) => (
-        <div key={index} className="text-center">
+        <div
+          key={index}
+          className="text-center border border-pink-400 p-4 rounded-lg" //bg-pink-100 border border-yellow-700 p-4 rounded-lg
+        >
           {/* Assuming coin has properties 'name' and 'link' */}
-          <a href={coin.link}>{coin.name}</a>
+          {/* <a href={coin.link}>{coin.name}</a> */}
           {/* <Link
             className={classes.carouselItem}
             to={`/coins/${coin.id}`}
@@ -133,7 +137,6 @@ export function MultiCarousel({}) {
           />
           <div>
             <p>{coin.item.symbol.toUpperCase()}</p>
-
             <p
               style={{
                 color:
@@ -146,6 +149,15 @@ export function MultiCarousel({}) {
               {coin.item.data.price_change_percentage_24h.aud.toFixed(2)}%
             </p>
             <p>AU${coin.item.data.price.toFixed(2)}</p>
+          </div>
+          <div className="items-center">
+            <img
+              src={coin.item.data.sparkline}
+              alt={`${coin.item.data.sparkline}`}
+              height={50}
+              width={80}
+              style={{ margin: "auto" }}
+            />
           </div>
         </div>
       ))}

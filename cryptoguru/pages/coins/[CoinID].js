@@ -1,4 +1,5 @@
 // import { SliderChart } from "@/Components/CoinSliderChart/SliderChart";
+import { SyncChart } from "@/Components/CoinSliderChart/SliderChart";
 import { GECKO_API_KEY } from "@/Config/CoinGeckoAPI";
 import { Typography } from "@mui/material";
 import { useRouter } from "next/router";
@@ -83,7 +84,7 @@ export default function CoinDetails() {
             </Typography>
           </span>
         </div>
-        {/* <SliderChart /> */}CHART GOES HERE!!
+        <SyncChart />
       </div>
     </>
   );

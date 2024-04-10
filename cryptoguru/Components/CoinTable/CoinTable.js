@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { LineChart, Line } from "recharts";
 import { GECKO_API_KEY } from "@/Config/CoinGeckoAPI";
 import {
   Container,
@@ -30,6 +30,14 @@ function formatNumber(number) {
     return number.toString();
   }
 }
+const calculateLineColor = (prices) => {
+  if (prices.length < 2) return "blue"; // Default color
+
+  const firstPrice = prices[0];
+  const lastPrice = prices[prices.length - 1];
+
+  return firstPrice <= lastPrice ? "green" : "red"; // Green for uptrend, red for downtrend
+};
 
 export function CoinsTable() {
   const [search, setSearch] = useState("");
@@ -68,10 +76,15 @@ export function CoinsTable() {
   const pageCount = Math.ceil((filteredCoins?.length || 0) / 10);
 
   return (
-    <Container>
+    <Container className="bg-pink-300 rounded-lg">
       <Typography
         variant="h4"
-        style={{ marginTop: 20, justifyContent: "center", display: "flex" }}
+        style={{
+          marginTop: 20,
+          justifyContent: "center",
+          display: "flex",
+          color: "cyan",
+        }}
       >
         Cryptocurrency Prices by Market Cap
       </Typography>
@@ -87,11 +100,16 @@ export function CoinsTable() {
         <Table>
           <TableHead>
             <TableRow>
-              {["Coin", "Price", "24h Change", "24h Volume", "Market Cap"].map(
-                (head) => (
-                  <TableCell key={head}>{head}</TableCell>
-                )
-              )}
+              {[
+                "Coin",
+                "Price",
+                "24h Change",
+                "24h Volume",
+                "Market Cap",
+                "7D Chart",
+              ].map((head) => (
+                <TableCell key={head}>{head}</TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -146,6 +164,26 @@ export function CoinsTable() {
                 </TableCell>
                 <TableCell>AU$ {formatNumber(coin.total_volume)}</TableCell>
                 <TableCell>AU$ {formatNumber(coin.market_cap)}</TableCell>
+                <TableCell>
+                  {coin.sparkline_in_7d && (
+                    <LineChart
+                      width={100}
+                      height={100}
+                      data={coin.sparkline_in_7d.price.map((price, index) => ({
+                        price: price,
+                        time: index, // Assuming the time is linearly increasing
+                      }))}
+                    >
+                      <Line
+                        type="monotone"
+                        dataKey="price"
+                        stroke={calculateLineColor(coin.sparkline_in_7d.price)}
+                        strokeWidth={1}
+                        dot={false}
+                      />
+                    </LineChart>
+                  )}
+                </TableCell>
               </TableRow>
               // </Link>
             ))}
@@ -157,8 +195,15 @@ export function CoinsTable() {
           count={pageCount}
           page={page}
           onChange={(_, value) => setPage(value)}
-          style={{ marginTop: 20, justifyContent: "center", display: "flex" }}
+          style={{
+            marginTop: 10,
+            justifyContent: "center",
+            display: "flex",
+          }}
           size="large"
+          color="primary"
+          variant="outlined"
+          shape="rounded"
         />
       )}
     </Container>
