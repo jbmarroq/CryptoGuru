@@ -11,7 +11,7 @@ import {
   Brush,
   AreaChart,
   Area,
-  Legend,
+  // Legend,
   ResponsiveContainer,
 } from "recharts";
 
@@ -42,15 +42,19 @@ export function SyncChart() {
   if (!coinHistory) return <div>Loading...</div>;
 
   // Extracting data for the charts
-  const chartData = coinHistory.prices.map((priceData) => ({
+  // const chartData = coinHistory.prices.map((priceData) => ({
+  //   date: formatDate(priceData[0]), // Assuming the timestamp is at index 0
+  //   price: priceData[1], //
+  //   // total_volumes: priceData[3],
+  // }));
+  const chartData = coinHistory.prices.map((priceData, index) => ({
     date: formatDate(priceData[0]), // Assuming the timestamp is at index 0
-    price: priceData[1], // Assuming the price is at index 1
-    marketCaps: priceData[(2, 1)], // Assuming market caps is at index 2 and its structure is [timestamp, value]
-    totalVolumes: priceData[(3, 1)], // Assuming total volumes is at index 3 and its structure is [timestamp, value]
-    // total_volumes: priceData[3],
-    // Assuming the price is also used for pv
+    price: priceData[1],
+    marketCaps: coinHistory.market_caps[index][1],
+    totalVolumes: coinHistory.total_volumes[index][1], //using the same index as priceData. Since all three arrays (price, marketCaps, and totalVolumes) are of the same length, using the same index ensures that we're accessing data that corresponds to the same timestamp.
   }));
-  // console.log("chartdata:", chartData);
+
+  console.log("chartdata:", chartData);
   return (
     <div style={{ width: "100%" }}>
       <h1>A demo of synchronized AreaCharts</h1>

@@ -1,4 +1,4 @@
-// import { SliderChart } from "@/Components/CoinSliderChart/SliderChart";
+// import { CandlestickChartExample } from "@/Components/CandleStickChart/CandleStickChart";
 import { SyncChart } from "@/Components/CoinSliderChart/SliderChart";
 import { GECKO_API_KEY } from "@/Config/CoinGeckoAPI";
 import { Typography, Grid, Container, Card } from "@mui/material";
