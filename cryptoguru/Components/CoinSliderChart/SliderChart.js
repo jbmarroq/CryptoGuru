@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import { useRouter } from "next/router";
 import { GECKO_API_KEY } from "@/Config/CoinGeckoAPI";
 import {
   LineChart,
@@ -20,6 +21,8 @@ const formatDate = (timestamp) => {
 };
 
 export function SyncChart() {
+  const router = useRouter();
+  const { CoinID } = router.query;
   const aud = "aud";
   const fetcher = (...args) =>
     fetch(...args, {
@@ -29,7 +32,7 @@ export function SyncChart() {
       },
     }).then((res) => res.json());
 
-  const URL = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${aud}&days=365`;
+  const URL = `https://api.coingecko.com/api/v3/coins/${CoinID}/market_chart?vs_currency=${aud}&days=365`;
 
   const { data: coinHistory, error } = useSWR(URL, fetcher);
 

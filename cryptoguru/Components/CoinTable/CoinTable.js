@@ -12,7 +12,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
+  Stack,
+  Box,
   Pagination,
 } from "@mui/material";
 import { useRouter } from "next/router";
@@ -80,7 +81,7 @@ export function CoinsTable() {
       sx={{
         backgroundColor: "pink",
         borderRadius: "0.5rem",
-        marginBottom: "10px",
+        marginBottom: "20px",
       }}
     >
       {/* "className="bg-pink-300 rounded-lg" */}
@@ -130,28 +131,27 @@ export function CoinsTable() {
                 key={coin.id}
                 onClick={() => handleRowClick(coin.id)} //<Link to={`/coins/${coin.id}`}> <<=this changes layout
               >
-                <TableCell
-                //   style={{display: "flex",gap: 15,}}
-                >
-                  <div className="flex items-center space-x-2">
+                <TableCell>
+                  <Stack direction="row" spacing={2} alignItems="center">
                     <img
                       src={coin.image}
                       alt={`${coin?.name} Ticker`}
                       width={50}
                       height={50}
                     />
-                    <div
-                    //className="flex flex-col" //</TableCell>style={{ display: "flex", flexDirection: "column" }}
+                    <Box
+                      sx={{
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                      }}
                     >
-                      <span>{coin.name}</span>
-                      <br></br>
-                      <span
-                        className="text-gray-500" //style={{ color: "darkgrey" }}
-                      >
+                      <Typography variant="subtitle1">{coin.name}</Typography>
+                      <Typography variant="body2" color="textSecondary">
                         {coin.symbol.toUpperCase()}
-                      </span>
-                    </div>
-                  </div>
+                      </Typography>
+                    </Box>
+                  </Stack>
                 </TableCell>
                 <TableCell>
                   AU$ {numberWithCommas(coin.current_price.toFixed(2))}
@@ -200,21 +200,30 @@ export function CoinsTable() {
         </Table>
       </TableContainer>
       {pageCount > 1 && (
-        <Pagination
-          count={pageCount}
-          page={page}
-          onChange={(_, value) => setPage(value)}
-          style={{
-            marginTop: 10,
-
+        <Box
+          sx={{
+            mt: 1,
             justifyContent: "center",
             display: "flex",
+            marginBottom: "40px",
           }}
-          size="large"
-          color="primary"
-          variant="outlined"
-          shape="rounded"
-        />
+        >
+          <Pagination
+            count={pageCount}
+            page={page}
+            onChange={(_, value) => setPage(value)}
+            sx={{
+              mt: 1,
+              justifyContent: "center",
+              display: "flex",
+              marginBottom: "40px",
+            }}
+            size="large"
+            color="primary"
+            variant="outlined"
+            shape="rounded"
+          />
+        </Box>
       )}
     </Container>
   );
