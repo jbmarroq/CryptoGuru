@@ -66,11 +66,11 @@ export default function CoinDetails() {
             style={{ marginBottom: 20, display: "block", margin: "0 auto" }}
           />
           <Typography variant="h3">{coinInfo?.name}</Typography>
-          <Typography variant="subtitle1">
+          <Typography variant="subtitle1" color="secondary">
             Genesis Date:{" "}
             {coinInfo.genesis_date != null ? coinInfo.genesis_date : "N/A"}
           </Typography>
-          <div style={{ marginBottom: "16px" }}>
+          <div style={{ marginBottom: "16px", textAlign: "left" }}>
             <span style={{ display: "flex" }}>
               <Typography variant="h5">Rank:</Typography>
               &nbsp; &nbsp;
@@ -100,7 +100,10 @@ export default function CoinDetails() {
               </Typography>
             </span>
           </div>
-          <Typography variant="subtitle1" style={{ textAlign: "justify" }}>
+          <Typography
+            variant="subtitle1"
+            style={{ textAlign: "justify", color: "#E0FFFF" }}
+          >
             {cleanText(coinInfo?.description.en)}
           </Typography>
         </Grid>

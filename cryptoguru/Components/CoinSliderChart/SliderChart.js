@@ -191,7 +191,7 @@ export function SyncChart() {
     <div
       style={{ border: "1px solid pink", padding: "10px", borderRadius: "5px" }}
     >
-      <h1>Price (AU$)</h1>
+      <h1 style={{ color: "goldenrod" }}>Price (AU$)</h1>
       <ResponsiveContainer width="100%" height={200}>
         <LineChart
           width={500}
@@ -219,14 +219,14 @@ export function SyncChart() {
           <Line
             type="monotone"
             dataKey="price"
-            stroke="#8884d8"
+            stroke="greenyellow"
             fill="#8884d8"
             dot={false}
           />
         </LineChart>
       </ResponsiveContainer>
 
-      <h1>Market Caps (AU$)</h1>
+      <h1 style={{ color: "goldenrod" }}>Market Caps (AU$)</h1>
 
       <ResponsiveContainer width="100%" height={200}>
         <LineChart
@@ -257,13 +257,13 @@ export function SyncChart() {
           <Line
             type="monotone"
             dataKey="marketCaps"
-            stroke="#82ca9d"
+            stroke="cyan"
             fill="#82ca9d"
             dot={false}
           />
         </LineChart>
       </ResponsiveContainer>
-      <h1>Total Volume (AU$)</h1>
+      <h1 style={{ color: "goldenrod" }}>Total Volume (AU$)</h1>
       <ResponsiveContainer width="100%" height={200}>
         <AreaChart
           width={500}
@@ -291,8 +291,8 @@ export function SyncChart() {
           <Area
             type="monotone"
             dataKey="totalVolumes"
-            stroke="#82ca9d"
-            fill="#82ca9d"
+            stroke="magenta"
+            fill="purple"
           />
           <Brush
             dataKey="date"

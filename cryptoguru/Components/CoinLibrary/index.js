@@ -27,7 +27,12 @@ export function CoinLibrary({}) {
       <Container>
         <Typography
           variant="h4"
-          style={{ marginTop: 20, justifyContent: "center", display: "flex" }}
+          style={{
+            marginTop: 20,
+            justifyContent: "center",
+            display: "flex",
+            color: "goldenrod",
+          }}
         >
           🔥🚀📈Trending Coins📉🥶⚰️
         </Typography>

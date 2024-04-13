@@ -92,8 +92,9 @@ export function CoinsTable() {
           marginTop: 20,
           justifyContent: "center",
           display: "flex",
-          color: "cyan",
+          color: "purple",
           padding: "5px",
+          fontWeight: "bold",
         }}
       >
         Cryptocurrency Prices by Market Cap
