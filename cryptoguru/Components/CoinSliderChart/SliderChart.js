@@ -53,6 +53,9 @@ const formatDate = (timestamp) => {
 export function SyncChart() {
   const [days, setDays] = useState(365);
   // const [historicalData, setHistoricalData] = useState([]);
+  const [chartData, setChartData] = useState([]);
+  const [didUpdateChartData, setDidUpdateChartData] = useState(false);
+  const [didUpdateAgain, setDidUpdateAgain] = useState(false);
 
   const router = useRouter();
   const { CoinID } = router.query;
@@ -80,6 +83,22 @@ export function SyncChart() {
 
   console.log("CoinHistory : ", coinHistory);
   // console.log(error);
+  useEffect(() => {
+    if (coinHistory && coinHistory.prices) {
+      setChartData((prevData) =>
+        [
+          ...prevData,
+          ...coinHistory?.prices.map((priceData, index) => ({
+            date: formatDate(priceData[0]),
+            price: priceData[1],
+            marketCaps: coinHistory.market_caps[index][1],
+            totalVolumes: coinHistory.total_volumes[index][1],
+          })),
+        ].sort((a, b) => new Date(a.date) - new Date(b.date))
+      );
+    }
+  }, [coinHistory]);
+
   if (error) return <div>Failed to load coinHistorys</div>;
   if (!coinHistory) return <div>Loading...</div>;
   // if (
@@ -94,10 +113,39 @@ export function SyncChart() {
 
     console.log("currentIndex", startIndex);
     console.log("endIndex", endIndex);
-    if (startIndex >= 2136) {
+    if (startIndex >= 2136 && !didUpdateAgain) {
       setDays(1);
-    } else if (startIndex >= 275) {
+      mutate(
+        URL,
+        (prevData) => {
+          const newData = prevData.prices.map((priceData, index) => ({
+            date: formatDate(priceData[0]),
+            price: priceData[1],
+            marketCaps: prevData.market_caps[index][1],
+            totalVolumes: prevData.total_volumes[index][1],
+          }));
+          setDidUpdateAgain(true);
+          return [...chartData, ...newData];
+        },
+        false
+      ); // Don't revalidate the data
+    } else if (startIndex >= 275 && !didUpdateChartData) {
       setDays(90);
+      mutate(
+        URL,
+        (prevData) => {
+          const newData = prevData.prices.map((priceData, index) => ({
+            date: formatDate(priceData[0]),
+            price: priceData[1],
+            marketCaps: prevData.market_caps[index][1],
+            totalVolumes: prevData.total_volumes[index][1],
+          }));
+          console.log("NewDATA : ", newData);
+          setDidUpdateChartData(true);
+          return [...chartData, ...newData];
+        },
+        false
+      );
     }
   };
 
@@ -108,16 +156,17 @@ export function SyncChart() {
   //   totalVolumes: coinHistory.total_volumes[index][1], //using the same index as priceData. Since all three arrays (price, marketCaps, and totalVolumes) are of the same length, using the same index ensures that we're accessing data that corresponds to the same timestamp.
   // }));
 
-  const chartData = coinHistory.prices.map((priceData, index) => ({
-    date: formatDate(priceData[0]), // Assuming the timestamp is at index 0
-    price: priceData[1],
-    marketCaps: coinHistory.market_caps[index][1],
-    totalVolumes: coinHistory.total_volumes[index][1], //using the same index as priceData. Since all three arrays (price, marketCaps, and totalVolumes) are of the same length, using the same index ensures that we're accessing data that corresponds to the same timestamp.
-  }));
+  // const chartData = [
+  //   ...coinHistory.prices.map((priceData, index) => ({
+  //     date: formatDate(priceData[0]), // Assuming the timestamp is at index 0
+  //     price: priceData[1],
+  //     marketCaps: coinHistory.market_caps[index][1],
+  //     totalVolumes: coinHistory.total_volumes[index][1], //using the same index as priceData. Since all three arrays (price, marketCaps, and totalVolumes) are of the same length, using the same index ensures that we're accessing data that corresponds to the same timestamp.
+  //   })),
+  // ];
 
-  const dataDisplayed = [...chartData];
-
-  console.log("chartdata:", chartData);
+  // const dataDisplayed = [...chartData];
+  console.log("DisplayedData:", chartData);
   return (
     <div>
       <h1>A demo of synchronized AreaCharts</h1>
@@ -125,7 +174,7 @@ export function SyncChart() {
         <LineChart
           width={500}
           height={200}
-          data={dataDisplayed}
+          data={chartData}
           syncId="anyId"
           margin={{
             top: 10,
@@ -154,7 +203,7 @@ export function SyncChart() {
         <LineChart
           width={500}
           height={200}
-          data={dataDisplayed}
+          data={chartData}
           syncId="anyId"
           margin={{
             top: 10,
@@ -182,7 +231,7 @@ export function SyncChart() {
         <AreaChart
           width={500}
           height={200}
-          data={dataDisplayed}
+          data={chartData}
           syncId="anyId"
           margin={{
             top: 10,
