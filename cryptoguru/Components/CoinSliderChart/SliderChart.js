@@ -33,6 +33,26 @@ const formatDate = (timestamp) => {
 
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
+// const CustomYAxisTick = ({ x, y, payload }) => {
+//   return (
+//     <g transform={`translate(${x},${y})`}>
+//       <text
+//         x={0}
+//         y={0}
+//         dy={16}
+//         textAnchor="end"
+//         fill="#666"
+//         transform="rotate(-45)"
+//       >
+//         {payload.value.toLocaleString("en", {
+//           notation: "compact",
+//           compactDisplay: "short",
+//         })}{" "}
+//         {/* Change the format as needed */}
+//       </text>
+//     </g>
+//   );
+// };
 
 // const useDebounce = (value, delay) => {
 //   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -168,8 +188,10 @@ export function SyncChart() {
   // const dataDisplayed = [...chartData];
   console.log("DisplayedData:", chartData);
   return (
-    <div>
-      <h1>A demo of synchronized AreaCharts</h1>
+    <div
+      style={{ border: "1px solid pink", padding: "10px", borderRadius: "5px" }}
+    >
+      <h1>Price (AU$)</h1>
       <ResponsiveContainer width="100%" height={200}>
         <LineChart
           width={500}
@@ -179,13 +201,20 @@ export function SyncChart() {
           margin={{
             top: 10,
             right: 30,
-            left: 0,
+            left: 30,
             bottom: 0,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
-          <YAxis />
+          <YAxis
+            tickFormatter={(value) =>
+              value.toLocaleString("en", {
+                notation: "compact",
+                compactDisplay: "short",
+              })
+            }
+          />
           <Tooltip labelStyle={{ color: "black" }} />
           <Line
             type="monotone"
@@ -197,7 +226,7 @@ export function SyncChart() {
         </LineChart>
       </ResponsiveContainer>
 
-      <p>Maybe some other content</p>
+      <h1>Market Caps (AU$)</h1>
 
       <ResponsiveContainer width="100%" height={200}>
         <LineChart
@@ -208,13 +237,20 @@ export function SyncChart() {
           margin={{
             top: 10,
             right: 30,
-            left: 0,
+            left: 30,
             bottom: 0,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
-          <YAxis />
+          <YAxis
+            tickFormatter={(value) =>
+              value.toLocaleString("en", {
+                notation: "compact",
+                compactDisplay: "short",
+              })
+            }
+          />
           {/* domain={[0, "auto"]} */}
           <Tooltip labelStyle={{ color: "black" }} />
 
@@ -227,6 +263,7 @@ export function SyncChart() {
           />
         </LineChart>
       </ResponsiveContainer>
+      <h1>Total Volume (AU$)</h1>
       <ResponsiveContainer width="100%" height={200}>
         <AreaChart
           width={500}
@@ -236,13 +273,20 @@ export function SyncChart() {
           margin={{
             top: 10,
             right: 30,
-            left: 0,
+            left: 30,
             bottom: 0,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
-          <YAxis />
+          <YAxis
+            tickFormatter={(value) =>
+              value.toLocaleString("en", {
+                notation: "compact",
+                compactDisplay: "short",
+              })
+            }
+          />
           <Tooltip labelStyle={{ color: "black" }} />
           <Area
             type="monotone"

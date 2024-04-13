@@ -26,6 +26,7 @@ const responsive = {
 
 export function MultiCarousel({}) {
   // const router = useRouter();
+
   // const { query } = router;
 
   //   const [favoriteFilms, setFavoriteFilms] = useState([]);
@@ -132,6 +133,7 @@ export function MultiCarousel({}) {
           {/* <a href={coin.link}>{coin.name}</a> */}
           <Link
             href={`/coins/${coin.item.id}`}
+
             // className="bg-transparent hover:bg-gray-300"
           >
             <img
@@ -139,7 +141,17 @@ export function MultiCarousel({}) {
               alt={coin.item.name}
               height={100}
               width={100}
-              className="bg-transparent hover:bg-pink-100 p-2"
+              style={{
+                border: "4px solid transparent",
+                borderRadius: "0.5rem",
+                transition: "border-color 0.3s",
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.borderColor = "#FED7E2";
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.borderColor = "transparent";
+              }} // className="bg-transparent hover:bg-pink-100 p-2"
             />
           </Link>
 
