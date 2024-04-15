@@ -1,7 +1,14 @@
 // import { CandlestickChartExample } from "@/Components/CandleStickChart/CandleStickChart";
 import { SyncChart } from "@/Components/CoinSliderChart/SliderChart";
 import { GECKO_API_KEY } from "@/Config/CoinGeckoAPI";
-import { Typography, Grid, Container, Button, Box } from "@mui/material";
+import {
+  Typography,
+  Grid,
+  Container,
+  Button,
+  Box,
+  Skeleton,
+} from "@mui/material";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import Link from "next/link";
@@ -36,11 +43,92 @@ export default function CoinDetails() {
 
   const URL = `https://api.coingecko.com/api/v3/coins/${CoinID}?localization=true&tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=true`;
 
-  const { data: coinInfo, error } = useSWR(CoinID ? URL : null, fetcher);
+  const {
+    data: coinInfo,
+    error,
+    isLoading,
+  } = useSWR(CoinID ? URL : null, fetcher);
   console.log("coin Details:", coinInfo);
 
-  if (!coinInfo && !error) return <div className="text-center">Loading...</div>;
-  if (error) return <div className="text-center">Error: {error}</div>;
+  // if (!coinInfo && !error) return <div className="text-center">Loading...</div>;
+  if (!coinInfo)
+    return (
+      <div style={{ padding: "30px" }}>
+        <Container>
+          <Box
+            sx={{
+              border: "1px solid pink",
+              display: "flex",
+              alignContent: "flex-start",
+              marginBottom: "20px",
+            }}
+          >
+            <Skeleton />
+          </Box>
+        </Container>
+        <div
+          style={{
+            border: "1px solid pink",
+            padding: "10px",
+            borderRadius: "5px",
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              style={{
+                border: "1px solid pink",
+                padding: "10px",
+                borderRadius: "5px",
+                textAlign: "center",
+              }}
+            >
+              <Skeleton
+                sx={{ bgcolor: "grey.900" }}
+                // animation="wave"
+                variant="rectangular"
+                width="100%"
+                height={200}
+              />
+            </Grid>
+            <Grid item xs={12} md={8}>
+              <div
+                style={{
+                  border: "1px solid pink",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+              >
+                <Skeleton
+                  sx={{ bgcolor: "grey.900" }}
+                  animation="wave"
+                  variant="rectangular"
+                  width="100%"
+                  height={200}
+                />
+              </div>
+            </Grid>
+          </Grid>
+          <Skeleton
+            sx={{ bgcolor: "grey.900" }}
+            // animation="wave"
+            variant="rectangular"
+            width="100%"
+            height={200}
+          />
+          <Skeleton
+            sx={{ bgcolor: "grey.900" }}
+            animation="wave"
+            variant="rectangular"
+            width="100%"
+            height={200}
+          />
+        </div>
+      </div>
+    );
+  // if (error) return <div className="text-center">Error: {error}</div>;
 
   // Extract release year from the query parameter
   //   const releaseYear = router.query.releaseYear; //
@@ -52,7 +140,7 @@ export default function CoinDetails() {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "left",
+            alignContent: "flex-start",
             marginBottom: "20px",
           }}
         >

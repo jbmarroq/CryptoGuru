@@ -13,7 +13,7 @@ import {
   Brush,
   AreaChart,
   Area,
-  // Legend,
+  Skeleton,
   ResponsiveContainer,
   Legend,
 } from "recharts";
@@ -90,7 +90,7 @@ export function SyncChart() {
 
   const URL = `https://api.coingecko.com/api/v3/coins/${CoinID}/market_chart?vs_currency=${aud}&days=${days}`;
 
-  const { data: coinHistory, error } = useSWR(URL, fetcher);
+  const { data: coinHistory, error, isLoading } = useSWR(URL, fetcher);
 
   // useEffect(() => {
   //   // Update historical data when new data is fetched
@@ -119,8 +119,22 @@ export function SyncChart() {
     }
   }, [coinHistory]);
 
-  if (error) return <div>Failed to load coinHistorys</div>;
-  if (!coinHistory) return <div>Loading...</div>;
+  if (error) return <div>Failed to load coinHistory</div>;
+  if (!coinHistory) return <div>Loading..</div>;
+  // if (isLoading)
+  //   return (
+  //     <div
+  //       style={{
+  //         border: "1px solid pink",
+  //         padding: "10px",
+  //         borderRadius: "5px",
+  //       }}
+  //     >
+  //       <Skeleton variant="rectangular" width="100%" height={200} />
+  //       <Skeleton variant="rectangular" width="100%" height={200} />
+  //       <Skeleton variant="rectangular" width="100%" height={200} />
+  //     </div>
+  //   );
   // if (
   //   !coinHistory ||
   //   !Array.isArray(historicalData) ||
@@ -227,6 +241,7 @@ export function SyncChart() {
             dot={false}
           />
         </LineChart>
+        )
       </ResponsiveContainer>
 
       <h1 style={{ color: "goldenrod" }}>Market Caps (AU$)</h1>
