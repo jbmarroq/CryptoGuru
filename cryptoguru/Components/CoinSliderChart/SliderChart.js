@@ -211,11 +211,14 @@ export function SyncChart() {
             tickFormatter={(value) =>
               value.toLocaleString("en", {
                 notation: "compact",
-                compactDisplay: "short",
               })
             }
           />
-          <Tooltip labelStyle={{ color: "black" }} />
+          <Tooltip
+            labelStyle={{
+              color: "black",
+            }}
+          />
           <Line
             type="monotone"
             dataKey="price"

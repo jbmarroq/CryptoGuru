@@ -124,7 +124,7 @@ export function MultiCarousel({}) {
           key={index}
           style={{
             textAlign: "center",
-            border: "1px solid #FEC8D8",
+            border: "1px solid #FF00FF", //#FF00FF
             padding: "1rem",
             borderRadius: "0.5rem",
           }} //bg-pink-100 border border-yellow-700 p-4 rounded-lg

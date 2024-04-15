@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LineChart, Line } from "recharts";
-import { GECKO_API_KEY } from "@/Config/CoinGeckoAPI";
+import SavingsOutlinedIcon from "@mui/icons-material/SavingsOutlined";
+import SavingsIcon from "@mui/icons-material/Savings";
+
 import {
   Container,
   Card,
@@ -16,8 +18,8 @@ import {
   Box,
   Pagination,
 } from "@mui/material";
+
 import { useRouter } from "next/router";
-import useSWR from "swr";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -40,8 +42,17 @@ const calculateLineColor = (prices) => {
   return firstPrice <= lastPrice ? "green" : "red"; // Green for uptrend, red for downtrend
 };
 
-export function CoinsTable() {
-  const [search, setSearch] = useState("");
+export function CoinsTable({
+  coins,
+  setSearch,
+  search,
+  pageCount,
+  updateFavorites,
+
+  // addToFaves,
+  // removeFromFaves,
+}) {
+  // const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
   const router = useRouter();
@@ -49,32 +60,19 @@ export function CoinsTable() {
   const handleRowClick = (coinId) => {
     router.push(`/coins/${coinId}`);
   };
-
-  const aud = "aud";
-  const fetcher = (...args) =>
-    fetch(...args, {
-      method: "GET",
-      headers: {
-        "x-cg-demo-api-key": GECKO_API_KEY,
-      },
-    }).then((res) => res.json());
-
-  const URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${aud}&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=24h`;
-  //        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=${aud}&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=24h'; GET SPARKLINE!!!!
-  const { data: topCoins, error } = useSWR(URL, fetcher);
-
-  console.log("TopCoins : ", topCoins);
-  console.log(error);
-  if (error) return <div>Failed to load Top Coins</div>;
-  if (!topCoins) return <div>Loading...</div>;
-
-  const filteredCoins = topCoins?.filter(
-    (coin) =>
-      coin.name.toLowerCase().includes(search.toLowerCase()) ||
-      coin.symbol.toLowerCase().includes(search.toLowerCase())
-  );
-
-  const pageCount = Math.ceil((filteredCoins?.length || 0) / 10);
+  // const handleFavoriteClick = (e, coin) => {
+  //   e.stopPropagation();
+  //   console.log("cliked and funcs");
+  //   if (coin.isFavorite) {
+  //     removeFromFaves(coin);
+  //   } else {
+  //     addToFaves(coin);
+  //   }
+  // };
+  const handleFavoriteClick = (e, coin) => {
+    e.stopPropagation();
+    updateFavorites(coin);
+  };
 
   return (
     <Container
@@ -84,17 +82,16 @@ export function CoinsTable() {
         marginBottom: "20px",
       }}
     >
-      {/* "className="bg-pink-300 rounded-lg" */}
-
       <Typography
         variant="h4"
         style={{
           marginTop: 20,
           justifyContent: "center",
           display: "flex",
-          color: "purple",
+          color: "magenta",
+
           padding: "5px",
-          fontWeight: "bold",
+          // fontWeight: "bold",
         }}
       >
         Cryptocurrency Prices by Market Cap
@@ -124,8 +121,7 @@ export function CoinsTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredCoins?.slice((page - 1) * 10, page * 10).map((coin) => (
-              // <Link href={`/coins/${coin.id}`} passHref>
+            {coins.slice((page - 1) * 10, page * 10).map((coin) => (
               <TableRow
                 hover
                 sx={{ cursor: "pointer" }}
@@ -134,6 +130,37 @@ export function CoinsTable() {
               >
                 <TableCell>
                   <Stack direction="row" spacing={2} alignItems="center">
+                    <Box
+                      sx={{
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      <button
+                        variant="text"
+                        color="inherit"
+                        sx={{ padding: 0 }}
+                        onClick={(e) => handleFavoriteClick(e, coin)}
+                      >
+                        {/* <AddchartOutlinedIcon
+                          color="secondary"
+                          onClick={(e) => handleFavoriteClick(e, coin)}
+                        /> */}
+                        {/* Use isFavorite to determine which icon to show */}
+                        {/* {coin.id &&
+                        favoriteCoins.some((c) => c.id === coin.id) ? ( // Check if the coin is a favorite
+                          <SavingsIcon color="secondary" />
+                        ) : (
+                          <AddchartOutlinedIcon color="secondary" />
+                        )} */}
+                        {coin.isFavorite ? (
+                          <SavingsIcon color="secondary" />
+                        ) : (
+                          <SavingsOutlinedIcon color="secondary" />
+                        )}
+                      </button>
+                    </Box>
                     <img
                       src={coin.image}
                       alt={`${coin?.name} Ticker`}
@@ -166,11 +193,9 @@ export function CoinsTable() {
                         : "red",
                   }}
                 >
-                  {
-                    coin.price_change_percentage_24h != null
-                      ? `${coin.price_change_percentage_24h.toFixed(2)}%`
-                      : "N/A" /* Or any other placeholder text or UI element */
-                  }
+                  {coin.price_change_percentage_24h != null
+                    ? `${coin.price_change_percentage_24h.toFixed(2)}%`
+                    : "N/A"}
                 </TableCell>
                 <TableCell>AU$ {formatNumber(coin.total_volume)}</TableCell>
                 <TableCell>AU$ {formatNumber(coin.market_cap)}</TableCell>
@@ -181,7 +206,7 @@ export function CoinsTable() {
                       height={100}
                       data={coin.sparkline_in_7d.price.map((price, index) => ({
                         price: price,
-                        time: index, // Assuming the time is linearly increasing
+                        time: index, // time is linearly increasing
                       }))}
                     >
                       <Line
@@ -195,12 +220,11 @@ export function CoinsTable() {
                   )}
                 </TableCell>
               </TableRow>
-              // </Link>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      {pageCount > 1 && (
+      {pageCount >= 1 && (
         <Box
           sx={{
             mt: 1,

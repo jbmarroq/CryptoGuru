@@ -1,10 +1,11 @@
 // import { CandlestickChartExample } from "@/Components/CandleStickChart/CandleStickChart";
 import { SyncChart } from "@/Components/CoinSliderChart/SliderChart";
 import { GECKO_API_KEY } from "@/Config/CoinGeckoAPI";
-import { Typography, Grid, Container, Card } from "@mui/material";
+import { Typography, Grid, Container, Button, Box } from "@mui/material";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-// import Link from "next/link";
+import Link from "next/link";
+import PriceChangeOutlinedIcon from "@mui/icons-material/PriceChangeOutlined";
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -47,6 +48,26 @@ export default function CoinDetails() {
 
   return (
     <div style={{ padding: "30px" }}>
+      <Container>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "left",
+            marginBottom: "20px",
+          }}
+        >
+          <Link href={"/coins"}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              size="large"
+              startIcon={<PriceChangeOutlinedIcon />}
+            >
+              Back To Coins
+            </Button>
+          </Link>
+        </Box>
+      </Container>
       <Grid container spacing={2}>
         <Grid
           item
@@ -113,7 +134,4 @@ export default function CoinDetails() {
       </Grid>
     </div>
   );
-}
-{
-  /* <Link href={`/films?releaseYear=${releaseYear}`}>Back to Dashboard</Link> */
 }
