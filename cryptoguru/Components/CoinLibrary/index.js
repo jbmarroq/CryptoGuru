@@ -1,6 +1,6 @@
 import { CoinsTable } from "../CoinTable/CoinTable";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import { Container, Typography, Box, Button } from "@mui/material";
 import useSWR from "swr";
 import { GECKO_API_KEY } from "@/Config/CoinGeckoAPI";
@@ -34,7 +34,7 @@ export function CoinLibrary({}) {
     }).then((res) => res.json());
 
   const URL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${aud}&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=24h`;
-  //        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=${aud}&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=24h'; GET SPARKLINE!!!!
+
   const { data: topCoinsData, error } = useSWR(URL, fetcher);
 
   console.log("TopCoinsData : ", topCoinsData);

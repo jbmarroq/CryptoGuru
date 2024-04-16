@@ -54,85 +54,78 @@ export default function CoinDetails() {
   if (!coinInfo)
     return (
       <div style={{ padding: "30px" }}>
-        <Container>
-          <Box
-            sx={{
+        <Container></Container>
+
+        <Grid container spacing={2}>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            style={{
               border: "1px solid pink",
-              display: "flex",
-              alignContent: "flex-start",
-              marginBottom: "20px",
+              padding: "10px",
+              borderRadius: "5px",
+              textAlign: "center",
             }}
           >
-            <Skeleton />
-          </Box>
-        </Container>
-        <div
-          style={{
-            border: "1px solid pink",
-            padding: "10px",
-            borderRadius: "5px",
-          }}
-        >
-          <Grid container spacing={2}>
-            <Grid
-              item
-              xs={12}
-              md={4}
+            <Skeleton
+              sx={{ bgcolor: "grey.900" }}
+              // animation="wave"
+              variant="rectangular"
+              width="100%"
+              height={800}
+              animation="wave"
+            />
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <div
               style={{
                 border: "1px solid pink",
                 padding: "10px",
                 borderRadius: "5px",
-                textAlign: "center",
               }}
             >
               <Skeleton
-                sx={{ bgcolor: "grey.900" }}
-                // animation="wave"
-                variant="rectangular"
+                sx={{ bgcolor: "grey.700" }}
+                animation="wave"
+                variant="rounded"
                 width="100%"
-                height={200}
+                height={250}
               />
-            </Grid>
-            <Grid item xs={12} md={8}>
-              <div
-                style={{
-                  border: "1px solid pink",
-                  padding: "10px",
-                  borderRadius: "5px",
-                }}
-              >
-                <Skeleton
-                  sx={{ bgcolor: "grey.900" }}
-                  animation="wave"
-                  variant="rectangular"
-                  width="100%"
-                  height={200}
-                />
-              </div>
-            </Grid>
+              <Skeleton
+                sx={{ bgcolor: "grey.800" }}
+                animation="wave"
+                variant="rounded"
+                width="100%"
+                height={250}
+              />
+              <Skeleton
+                sx={{ bgcolor: "grey.700" }}
+                animation="wave"
+                variant="rounded"
+                width="100%"
+                height={250}
+              />
+            </div>
           </Grid>
-          <Skeleton
-            sx={{ bgcolor: "grey.900" }}
-            // animation="wave"
-            variant="rectangular"
-            width="100%"
-            height={200}
-          />
-          <Skeleton
-            sx={{ bgcolor: "grey.900" }}
-            animation="wave"
-            variant="rectangular"
-            width="100%"
-            height={200}
-          />
-        </div>
+        </Grid>
+        <Skeleton
+          sx={{ bgcolor: "grey.900" }}
+          animation="wave"
+          variant="rectangular"
+          width="100%"
+          height={200}
+        />
+        <Skeleton
+          sx={{ bgcolor: "grey.900" }}
+          animation="wave"
+          variant="rectangular"
+          width="100%"
+          height={200}
+        />
       </div>
     );
   // if (error) return <div className="text-center">Error: {error}</div>;
-
-  // Extract release year from the query parameter
-  //   const releaseYear = router.query.releaseYear; //
-  //   const coin = coinInfo;
 
   return (
     <div style={{ padding: "30px" }}>

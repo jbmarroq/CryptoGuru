@@ -21,7 +21,7 @@ import { mutate } from "swr";
 
 // const formatDate = (timestamp) => {
 //   const date = new Date(timestamp);
-//   return date.toLocaleDateString(); // Adjust the format as needed
+//   return date.toLocaleDateString();
 // };
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
@@ -33,26 +33,6 @@ const formatDate = (timestamp) => {
 
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
-// const CustomYAxisTick = ({ x, y, payload }) => {
-//   return (
-//     <g transform={`translate(${x},${y})`}>
-//       <text
-//         x={0}
-//         y={0}
-//         dy={16}
-//         textAnchor="end"
-//         fill="#666"
-//         transform="rotate(-45)"
-//       >
-//         {payload.value.toLocaleString("en", {
-//           notation: "compact",
-//           compactDisplay: "short",
-//         })}{" "}
-//         {/* Change the format as needed */}
-//       </text>
-//     </g>
-//   );
-// };
 
 // const useDebounce = (value, delay) => {
 //   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -121,26 +101,6 @@ export function SyncChart() {
 
   if (error) return <div>Failed to load coinHistory</div>;
   if (!coinHistory) return <div>Loading..</div>;
-  // if (isLoading)
-  //   return (
-  //     <div
-  //       style={{
-  //         border: "1px solid pink",
-  //         padding: "10px",
-  //         borderRadius: "5px",
-  //       }}
-  //     >
-  //       <Skeleton variant="rectangular" width="100%" height={200} />
-  //       <Skeleton variant="rectangular" width="100%" height={200} />
-  //       <Skeleton variant="rectangular" width="100%" height={200} />
-  //     </div>
-  //   );
-  // if (
-  //   !coinHistory ||
-  //   !Array.isArray(historicalData) ||
-  //   historicalData.length === 0
-  // )
-  //   return <div>Loading...</div>;
 
   const handleBrushChange = (value) => {
     const { startIndex, endIndex } = value;
@@ -148,6 +108,7 @@ export function SyncChart() {
     console.log("currentIndex", startIndex);
     console.log("endIndex", endIndex);
     if (startIndex >= 2136 && !didUpdateAgain) {
+      //assuming fetch returns 365 datapoints
       setDays(1);
       mutate(
         URL,
@@ -164,6 +125,7 @@ export function SyncChart() {
         false
       ); // Don't revalidate the data
     } else if (startIndex >= 275 && !didUpdateChartData) {
+      //assuming fetch returns 365 datapoints
       setDays(90);
       mutate(
         URL,

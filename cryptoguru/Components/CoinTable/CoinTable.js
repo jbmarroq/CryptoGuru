@@ -143,17 +143,6 @@ export function CoinsTable({
                         sx={{ padding: 0 }}
                         onClick={(e) => handleFavoriteClick(e, coin)}
                       >
-                        {/* <AddchartOutlinedIcon
-                          color="secondary"
-                          onClick={(e) => handleFavoriteClick(e, coin)}
-                        /> */}
-                        {/* Use isFavorite to determine which icon to show */}
-                        {/* {coin.id &&
-                        favoriteCoins.some((c) => c.id === coin.id) ? ( // Check if the coin is a favorite
-                          <SavingsIcon color="secondary" />
-                        ) : (
-                          <AddchartOutlinedIcon color="secondary" />
-                        )} */}
                         {coin.isFavorite ? (
                           <SavingsIcon color="secondary" />
                         ) : (
