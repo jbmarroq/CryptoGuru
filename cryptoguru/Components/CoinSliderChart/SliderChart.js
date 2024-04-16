@@ -17,6 +17,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
+
 import { mutate } from "swr";
 
 // const formatDate = (timestamp) => {
@@ -100,7 +101,32 @@ export function SyncChart() {
   }, [coinHistory]);
 
   if (error) return <div>Failed to load coinHistory</div>;
-  if (!coinHistory) return <div>Loading..</div>;
+  if (isLoading) return;
+  <div
+    style={{ border: "1px solid pink", padding: "10px", borderRadius: "5px" }}
+  >
+    <Skeleton
+      sx={{ bgcolor: "grey.700" }}
+      animation="wave"
+      variant="rounded"
+      width="100%"
+      height={250}
+    />
+    <Skeleton
+      sx={{ bgcolor: "grey.800" }}
+      animation="wave"
+      variant="rounded"
+      width="100%"
+      height={250}
+    />
+    <Skeleton
+      sx={{ bgcolor: "grey.700" }}
+      animation="wave"
+      variant="rounded"
+      width="100%"
+      height={250}
+    />
+  </div>;
 
   const handleBrushChange = (value) => {
     const { startIndex, endIndex } = value;
